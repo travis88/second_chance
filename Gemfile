@@ -23,15 +23,18 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
+
 group :development, :test do
 	gem 'byebug'
-	gem 'web-console'
 	gem 'spring'
 	gem 'listen'
+	gem 'rspec-rails'
 end
 
 group :test do
 	gem 'minitest-reporters'
 	gem 'mini_backtrace'
 	gem 'guard-minitest'
+	gem 'selenium-webdriver'
+	gem 'capybara'
 end

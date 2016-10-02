@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "StaticPages", type: :request do
   	describe "GET /static_pages" do
-  		tr = "Ruby on Rails Tutorial Sample App |"
+  		let = "Ruby on Rails Tutorial Sample App |"
 
     	describe "Home page" do
     		it "should have the content 'Sample App'" do
@@ -11,8 +11,8 @@ RSpec.describe "StaticPages", type: :request do
     		end
 
     		it "should have title 'Home'" do
-    			visit "static_pages/home"
-    			expect(page).to have_title("#{tr} Home")
+    			visit "/static_pages/home"
+    			expect(page).to have_title("#{let} Home")
     		end
     	end
 
@@ -23,8 +23,8 @@ RSpec.describe "StaticPages", type: :request do
     		end
 
     		it "should have title 'Help'" do
-    			visit "static_pages/help"
-    			expect(page).to have_title("#{tr} Help")
+    			visit "/static_pages/help"
+    			expect(page).to have_title("#{let} Help")
     		end
     	end
 
@@ -35,8 +35,20 @@ RSpec.describe "StaticPages", type: :request do
     		end
 
     		it "should have title 'About Us'" do
-    			visit "static_pages/about"
-    			expect(page).to have_title("#{tr} About Us")
+    			visit "/static_pages/about"
+    			expect(page).to have_title("#{let} About Us")
+    		end
+    	end
+
+    	describe "Contact page" do
+    		it "should have content 'Contacts'" do
+    			visit "/static_pages/contact"
+    			expect(page).to have_content('Contacts')
+    		end
+
+    		it "should have title 'Contact'" do
+    			visit "/static_pages/contact"
+    			expect(page).to have_title("#{let} Contact")
     		end
     	end
   	end

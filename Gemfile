@@ -41,4 +41,5 @@ group :test do
 	gem 'guard-minitest'
 	gem 'selenium-webdriver'
 	gem 'capybara'
+	gem 'factory_girl_rails', '~> 4.7.0'
 end

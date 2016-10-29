@@ -26,7 +26,11 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-
+# Create new testing users
+gem 'faker', '~>1.6.6'
+# Pagination
+gem 'will_paginate', '~> 3.1.5'
+gem 'bootstrap-will_paginate', '~> 0.0.10'
 
 group :development, :test do
 	gem 'byebug'
@@ -42,6 +46,6 @@ group :test do
 	gem 'selenium-webdriver'
 	gem 'capybara'
 	gem 'factory_girl_rails', '~> 4.7.0'
-	gem 'cucumber-rails', '~> 1.4.5'
+	gem 'cucumber-rails', '~> 1.4.5', :require => false
 	gem 'database_cleaner', github: 'bmabey/database_cleaner'
 end

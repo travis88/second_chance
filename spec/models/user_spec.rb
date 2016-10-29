@@ -12,24 +12,35 @@ RSpec.describe User, type: :model do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }
+  
   it { should be_valid }
+  it { should_not be_admin }
 
-  describe "When name is not present" do
+  describe "with admin attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:admin)
+    end
+    it { should be_admin }
+  end
+
+  describe "when name is not present" do
   	before { @user.name = "" }
   	it { should_not be_valid }
   end
   
-  describe "When name is too long" do
+  describe "when name is too long" do
   	before { @user.name = "a" * 51 }
   	it { should_not be_valid }
   end
 
-  describe "When email is not present" do
+  describe "when email is not present" do
   	before { @user.email = "" }
   	it { should_not be_valid }
   end
 
-  describe "When email format is invalid" do
+  describe "when email format is invalid" do
   	it "should be invalid" do
   		addresses = %w[user@foo,com user_at_foo.org example.user@foo.
   			foo@bar_baz.com foo@bar+baz.com]
@@ -40,7 +51,7 @@ RSpec.describe User, type: :model do
   	end
   end
 
-  describe "When email format is valid" do
+  describe "when email format is valid" do
   	it "should be valid" do
   		addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
   		addresses.each do |valid_address|
@@ -50,7 +61,7 @@ RSpec.describe User, type: :model do
   	end
   end
 
-  describe "When email address is already taken" do
+  describe "when email address is already taken" do
   	before do
   		user_with_same_email = @user.dup
   		user_with_same_email.save
@@ -58,7 +69,7 @@ RSpec.describe User, type: :model do
   	it { should_not be_valid }
   end
 
-  describe "When email address is already taken" do
+  describe "when email address is already taken" do
   	before do
   		user_with_same_email = @user.dup
   		user_with_same_email.email = @user.email.upcase
@@ -67,7 +78,7 @@ RSpec.describe User, type: :model do
   	it { should_not be_valid }
   end
 
-  describe "When password is not present" do
+  describe "when password is not present" do
   	before do
   		@user = User.new(name: "Example User", email: "es@exam.com",
   			password: " ", password_confirmation: " ")
@@ -75,25 +86,25 @@ RSpec.describe User, type: :model do
   	it { should_not be_valid }
   end
 
-  describe "When password doesn't match confirmation" do
+  describe "when password doesn't match confirmation" do
   	before { @user.password_confirmation = "mismatch" }
   	it { should_not be_valid }
   end
 
-  describe "With a password that's too short" do
+  describe "with a password that's too short" do
   	before { @user.password = @user.password_confirmation = "a" * 5 }
   	it { should_not be_valid }
   end
 
-  describe "Return value of authenticate method" do
+  describe "return value of authenticate method" do
   	before { @user.save }
   	let(:found_user) { User.find_by(email: @user.email) }
 
-	  	describe "With valid password" do
+	  	describe "with valid password" do
 	  		it { should eq found_user.authenticate(@user.password) }
 	  	end
 
-	  	describe "With invalid password" do
+	  	describe "with invalid password" do
 	  		let(:user_for_invalid_password) { found_user.authenticate("invalid") }
 	  		it { should_not eq user_for_invalid_password }
 	  		specify { expect(user_for_invalid_password).to be_falsey }
